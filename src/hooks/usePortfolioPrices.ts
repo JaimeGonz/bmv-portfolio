@@ -19,9 +19,9 @@ export function usePortfolioPrices(initialPositions: Position[]) {
 
         return {
             ...position,
-            currentPrice: quote?.BMV?.u ?? quote?.BIVA?.u ?? position.buyPrice,
-            dailyChangePct: quote?.BMV?.c ?? quote?.BIVA?.c ?? 0,
-            lastUpdated: quote?.BMV?.f ?? quote?.BIVA?.f ?? ""
+            currentPrice: quote?.bmv?.u ?? quote?.biva?.u ?? position.buyPrice,
+            dailyChangePct: quote?.bmv?.c ?? quote?.biva?.c ?? 0,
+            lastUpdated: quote?.bmv?.f ?? quote?.biva?.f ?? ""
         }
     }))
 

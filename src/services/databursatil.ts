@@ -22,8 +22,8 @@ export interface QuoteData {
 
 export interface QuoteResponse {
     [tickerSerie: string] : {
-        BMV?: QuoteData
-        BIVA?: QuoteData
+        bmv?: QuoteData
+        biva?: QuoteData
     }
 }
 
@@ -86,7 +86,7 @@ export async function getCurrentPrice(ticker: string): Promise<number | null> {
         const data = await getQuotes([ticker], "u");
         const entry = data[ticker];
         if (!entry) return null;
-        return entry.BMV?.u ?? entry.BIVA?.u ?? null;
+        return entry.bmv?.u ?? entry.biva?.u ?? null;
     } catch {
         return null;
     }

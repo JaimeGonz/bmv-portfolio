@@ -1,4 +1,5 @@
 import { MetricCard } from "@/components/dashboard/MetriCard";
+import { PositionsTable } from "@/components/dashboard/PositionsTable";
 import { Topbar } from "@/components/layout/Topbar";
 import { mockPositions } from "@/data/mockPositions";
 import { usePortfolioMetrics } from "@/hooks/usePortfolioMetrics";
@@ -63,6 +64,7 @@ export function Dashboard() {
           positive
         />
       </div>
+      <PositionsTable positions={positions} loading={loading} />
     </div>
   );
 }
