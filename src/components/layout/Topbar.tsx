@@ -4,9 +4,10 @@ import { Button } from "../ui/button";
 interface TopbarProps {
   title: string;
   subtitle: string;
+  onAddPosition: () => void;
 }
 
-export function Topbar({ title, subtitle }: TopbarProps) {
+export function Topbar({ title, subtitle, onAddPosition }: TopbarProps) {
   return (
     <div className="flex items-center justify-between mb-6">
       <div>
@@ -17,10 +18,16 @@ export function Topbar({ title, subtitle }: TopbarProps) {
         <Button variant="outline" size="sm" className="text-xs">
           Exportar CSV
         </Button>
-        <Button size="sm" className="text-xs bg-blue-600 hover:bg-blue-700">
-          <Plus size={14} className="mr-1" />
-          Agregar posición
-        </Button>
+        {onAddPosition && (
+          <Button
+            size="sm"
+            className="text-xs bg-blue-600 hover:bg-blue-700"
+            onClick={onAddPosition}
+          >
+            <Plus size={14} className="mr-1" />
+            Agregar posición
+          </Button>
+        )}
       </div>
     </div>
   );

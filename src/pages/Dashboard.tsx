@@ -1,9 +1,11 @@
 import { MetricCard } from "@/components/dashboard/MetriCard";
 import { PositionsTable } from "@/components/dashboard/PositionsTable";
 import { Topbar } from "@/components/layout/Topbar";
+import { AddPositionModal } from "@/components/portfolio/AddPositionModal";
 import { mockPositions } from "@/data/mockPositions";
 import { usePortfolioMetrics } from "@/hooks/usePortfolioMetrics";
 import { usePortfolioPrices } from "@/hooks/usePortfolioPrices";
+import { useState } from "react";
 
 const formatMXN = (value: number) =>
   new Intl.NumberFormat("es-MX", {
@@ -13,6 +15,7 @@ const formatMXN = (value: number) =>
   }).format(value);
 
 export function Dashboard() {
+  const [modalOpen, setModalOpen] = useState(false);
   const { positions, loading, error } = usePortfolioPrices(mockPositions);
   const metrics = usePortfolioMetrics(positions);
 
@@ -25,6 +28,7 @@ export function Dashboard() {
           month: "short",
           year: "numeric",
         })}`}
+        onAddPosition={() => setModalOpen(true)}
       />
 
       {error && (
@@ -65,6 +69,8 @@ export function Dashboard() {
         />
       </div>
       <PositionsTable positions={positions} loading={loading} />
+
+      <AddPositionModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
 }

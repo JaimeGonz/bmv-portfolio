@@ -52,3 +52,10 @@ export interface PortfolioMetrics {
     totalPositions: number
     vsIndex: number
 }
+
+export function getAssetType(tipoValorId: string): AssetType {
+  if (tipoValorId === "CF") return "reit"      // FIBRAs
+  if (tipoValorId === "1B") return "etf"        // ETFs / TRACs
+  if (tipoValorId === "1" || tipoValorId === "1E") return "stock"  // Acciones nacionales y extranjeras
+  return "other"
+}
