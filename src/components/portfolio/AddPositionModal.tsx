@@ -43,11 +43,22 @@ export function AddPositionModal({ open, onClose }: AddPositionModalProps) {
     try {
       setSearching(true);
       setError(null);
-      const data = await searchEmissoras({ letra: query.toUpperCase() });
+
+      // Busca en ambos mercados en paralelo
+      const [localResult, globalResult] = await Promise.allSettled([
+        searchEmissoras({ letra: query.toUpperCase(), mercado: "local" }),
+        searchEmissoras({ letra: query.toUpperCase(), mercado: "global" }),
+      ]);
+
+      // Toma solo las que tuvieron éxito
+      const combined = {
+        ...(localResult.status === "fulfilled" ? localResult.value : {}),
+        ...(globalResult.status === "fulfilled" ? globalResult.value : {}),
+      };
 
       // Mapear resultados a SearchResult
       const flat: SearchResult[] = [];
-      for (const [ticker, series] of Object.entries(data)) {
+      for (const [ticker, series] of Object.entries(combined)) {
         for (const [serie, info] of Object.entries(
           series as Record<string, EmissoraInfo>,
         )) {

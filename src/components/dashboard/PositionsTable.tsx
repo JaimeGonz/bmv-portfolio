@@ -81,7 +81,7 @@ export function PositionsTable({
               Tipo
             </TableHead>
             <TableHead className="text-xs text-gray-400 font-normal text-right">
-              Acciones
+              Titulos
             </TableHead>
             <TableHead className="text-xs text-gray-400 font-normal text-right">
               Precio compra
@@ -114,7 +114,9 @@ export function PositionsTable({
                     {position.ticker}
                     {position.serie}
                   </div>
-                  <div className="text-xs text-gray-400">{position.name}</div>
+                  <div className="text-xs text-gray-400 truncate max-w-75">
+                    {position.name}
+                  </div>
                 </TableCell>
                 <TableCell>
                   <Badge className={typeBadgeClass[position.type]}>

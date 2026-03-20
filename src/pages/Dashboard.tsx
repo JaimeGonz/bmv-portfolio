@@ -2,9 +2,8 @@ import { MetricCard } from "@/components/dashboard/MetriCard";
 import { PositionsTable } from "@/components/dashboard/PositionsTable";
 import { Topbar } from "@/components/layout/Topbar";
 import { AddPositionModal } from "@/components/portfolio/AddPositionModal";
-import { mockPositions } from "@/data/mockPositions";
 import { usePortfolioMetrics } from "@/hooks/usePortfolioMetrics";
-import { usePortfolioPrices } from "@/hooks/usePortfolioPrices";
+import { usePortfolioPricesFromStore } from "@/hooks/usePortfolioPricesFromStore";
 import { useState } from "react";
 
 const formatMXN = (value: number) =>
@@ -16,7 +15,7 @@ const formatMXN = (value: number) =>
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
-  const { positions, loading, error } = usePortfolioPrices(mockPositions);
+  const { positions, loading, error } = usePortfolioPricesFromStore();
   const metrics = usePortfolioMetrics(positions);
 
   return (
@@ -30,16 +29,12 @@ export function Dashboard() {
         })}`}
         onAddPosition={() => setModalOpen(true)}
       />
-
       {error && (
         <div className="mb-4 p-3 bg-red-50 border border-red-100 rounded-lg text-xs text-red-600">
-          {error} - mostrando preciosa de compra como referencia.
+          {error}
         </div>
       )}
-
-      <div
-        className={`grid  grid-cols-4 gap-3 mb-6 transition-opacity ${loading ? "opacity-50" : "opacity-100"}`}
-      >
+      <div className="grid  grid-cols-4 gap-3 mb-6">
         <MetricCard
           label="Valor total"
           value={loading ? "Cargando..." : formatMXN(metrics.totalValue)}

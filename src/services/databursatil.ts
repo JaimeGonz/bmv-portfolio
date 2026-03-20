@@ -152,7 +152,7 @@ export async function getTopMovers(date: string, quantity: number): Promise<TopR
  * Mercado: "local" o "global"
  */
 
-export async function searchEmissoras(options?: {letra?: string, mercado?: "local" | "global" | "local,global"}): Promise<Record<string, unknown>> {
+export async function searchEmissoras(options?: {letra?: string, mercado?: "local" | "global"}): Promise<Record<string, unknown>> {
     const { data } = await api.get("/emisoras", {
         params: {
             token: TOKEN,

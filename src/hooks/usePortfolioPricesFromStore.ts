@@ -32,7 +32,7 @@ export function usePortfolioPricesFromStore() {
 
     return {
         positions: positionsWithPrices,
-        isLoading,
+        loading: isLoading,
         error: error ? `Error al cargar precios: ${error.message}` : null,
     }
 }
