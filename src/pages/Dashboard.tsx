@@ -1,4 +1,5 @@
 import { MetricCard } from "@/components/dashboard/MetriCard";
+import { PortfolioDonut } from "@/components/dashboard/PortfolioDonut";
 import { PositionsTable } from "@/components/dashboard/PositionsTable";
 import { Topbar } from "@/components/layout/Topbar";
 import { AddPositionModal } from "@/components/portfolio/AddPositionModal";
@@ -57,11 +58,22 @@ export function Dashboard() {
           neutral
         />
         <MetricCard
-          label="vs IPC (benchmark)"
-          value={`+${metrics.vsIndex}%`}
-          change="Superando al índice"
-          positive
+          label="Mejor del día"
+          value={
+            metrics.bestToday
+              ? `${metrics.bestToday.ticker}${metrics.bestToday.serie}`
+              : "—"
+          }
+          change={
+            metrics.bestToday
+              ? `+${metrics.bestToday.dailyChangePct.toFixed(2)}%`
+              : "Sin datos"
+          }
+          positive={!!metrics.bestToday && metrics.bestToday.dailyChangePct > 0}
         />
+      </div>
+      <div className="mb-6">
+        <PortfolioDonut positions={positions} />
       </div>
       <PositionsTable positions={positions} loading={loading} />
 

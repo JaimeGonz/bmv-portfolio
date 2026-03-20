@@ -7,13 +7,18 @@ export function usePortfolioMetrics(positions: Position[]): PortfolioMetrics {
         const totalCost = positions.reduce((sum, p) => sum + p.buyPrice * p.shares, 0);
         const totalGain = totalValue - totalCost;
         const returnPct = totalCost > 0 ? (totalGain / totalCost) * 100 : 0;
+
+        const bestPosition = positions.reduce<Position | null>((best, p) => {
+            if(!best) return p;
+            return p.dailyChangePct > best.dailyChangePct ? p : best;
+        }, null);
         
         return {
             totalValue,
             totalGain,
             returnPct,
             totalPositions: positions.length,
-            vsIndex: 2.1
+            bestToday: bestPosition
         }
     }, [positions])
 } 

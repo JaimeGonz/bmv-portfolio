@@ -50,7 +50,7 @@ export interface PortfolioMetrics {
     totalGain: number
     returnPct: number
     totalPositions: number
-    vsIndex: number
+    bestToday: Position | null
 }
 
 export function getAssetType(tipoValorId: string): AssetType {

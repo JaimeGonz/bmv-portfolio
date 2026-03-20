@@ -15,9 +15,25 @@ export const usePortfolioStore = create<PortfolioStore>()(
       positions: [],
 
       addPosition: (position) =>
-        set((state) => ({
-          positions: [...state.positions, position],
-        })),
+        set((state) => {
+          // Busca si ya existe una posición con el mismo ticker y serie
+          const existing = state.positions.find((p) => p.ticker === position.ticker && p.serie === position.serie);
+
+          if(existing) {
+            // Calcular precio promedio ponderado
+            const totalShares = existing.shares + position.shares;
+            const avgBuyPrice = (existing.buyPrice * existing.shares + position.buyPrice * position.shares) / totalShares;
+
+            // Actualizar posición existente
+            return {
+              positions: state.positions.map((p) => {
+                return p.id === existing.id ? { ...p, shares: totalShares, buyPrice: avgBuyPrice } : p;
+              })
+            }
+          }
+
+          return { positions: [...state.positions, position] }
+        }),
 
       removePosition: (id) =>
         set((state) => ({
